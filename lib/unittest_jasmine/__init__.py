@@ -16,3 +16,4 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 
 from . import _node as node
+from . import _package_manager as package_manager
