@@ -4,6 +4,13 @@ import unittest_jasmine
 
 #: The expected output from the test
 TEST_OUTPUT = (
+    {'type': 'suite', 'children': [
+        {'description': 'TestRunner', 'type': 'suite', 'children': [
+            {'description': 'spec 1', 'type': 'spec'},
+            {'description': 'inner suite', 'type': 'suite', 'children': [
+                {'description': 'inner spec 1', 'type': 'spec'},
+                {'description': 'inner spec 2', 'type': 'spec'}]},
+            {'description': 'spec 2', 'type': 'spec'}]}]},
     {'event': 'suiteStarted', 'data': {
         'description': 'TestRunner'}},
     {'event': 'specStarted', 'data': {
