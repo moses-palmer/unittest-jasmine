@@ -37,6 +37,37 @@ TEST_OUTPUT = (
         'description': 'TestRunner', 'status': 'finished'}})
 
 
+#: A test suite definition
+SUITE_DEFINITION = {
+    'type': 'suite',
+    'id': 'suite0',
+    'fullName': 'Suite 0',
+    'description': 'This is Suite 0',
+    'children': [
+        {
+            'type': 'suite',
+            'id': 'suite1',
+            'fullName': 'Suite 1',
+            'description': 'This is Suite 1',
+            'children': [
+                {
+                    'type': 'spec',
+                    'id': 'spec0',
+                    'fullName': 'Spec 0',
+                    'description': 'This is spec 0'
+                },
+                {
+                    'type': 'spec',
+                    'id': 'spec1',
+                    'fullName': 'Spec 1',
+                    'description': 'This is spec 1'}]},
+        {
+            'type': 'spec',
+            'id': 'spec2',
+            'fullName': 'Spec 2',
+            'description': 'This is spec 2'}]}
+
+
 def output(**options):
     """A generator that yields the relevant output from the test run"""
     return unittest_jasmine.runner.jasmine(
