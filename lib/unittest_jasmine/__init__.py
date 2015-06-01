@@ -14,3 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see <http://www.gnu.org/licenses/>.
+
+from . import _node as node
+from . import _package_manager as package_manager
+from . import _runner as runner

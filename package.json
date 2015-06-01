@@ -1,0 +1,9 @@
+{
+    "name": "unittest-jasmine",
+    "repository": "https://github.com/moses-palmer/unittest-jasmine",
+
+    "dependencies": {
+        "coffee-script": ">=1.9.2",
+        "jasmine": ">=2.3.1"
+    }
+}
