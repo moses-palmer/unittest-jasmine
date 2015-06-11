@@ -32,6 +32,7 @@ class JasmineData(object):
         self._id = id
         self._name = name
         self._description = description
+        self._result = {}
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) \
@@ -57,6 +58,12 @@ class JasmineData(object):
         """The item description."""
         return self._description
 
+    @property
+    def result(self):
+        """The result of this event as read from the output stream; this is set
+        after :meth:`running` has completed successfully"""
+        return self._result
+
     def running(self, jasmine):
         """Return a context manager that ensures that the event stream is
         correct.
@@ -70,7 +77,9 @@ class JasmineData(object):
         def context():
             self.verify_started(next(jasmine))
             yield self
-            self.verify_done(next(jasmine))
+            result = next(jasmine)
+            self.verify_done(result)
+            self._result = result
         return context()
 
     def _verify(self, expected_event, actual_event, data):
