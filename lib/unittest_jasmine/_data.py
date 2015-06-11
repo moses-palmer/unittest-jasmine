@@ -22,6 +22,8 @@ Use :func:`parse` to convert the first line to a structured representation of
 the tests.
 """
 
+import contextlib
+
 
 class JasmineData(object):
     """The base class for *Jasmine* specs and suites.
@@ -51,6 +53,63 @@ class JasmineData(object):
     def description(self):
         """The item description."""
         return self._description
+
+    def running(self, jasmine):
+        """Return a context manager that ensures that the event stream is
+        correct.
+
+        :param unittest_jasmine.runner.Jasmine jasmine: The runner from which
+        to load events.
+
+        :return: a context manager
+        """
+        @contextlib.contextmanager
+        def context():
+            self.verify_started(next(jasmine))
+            yield self
+            self.verify_done(next(jasmine))
+        return context()
+
+    def _verify(self, expected_event, actual_event, data):
+        """Verifies that and event is of the expected type, and that the
+        ``'id'`` field of ``data`` equals :attr:`id`.
+
+        :param str expected_event: The expected event name.
+
+        :param str actual_event: The actual event name.
+
+        :param dict data: The actual data of the event.
+
+        :raises RuntimeError: if any data is incorrect
+        """
+        if expected_event != actual_event:
+            raise RuntimeError(
+                'expected event %s, found %s',
+                expected_event, actual_event)
+        if not data:
+            raise RuntimeError('no event data provided')
+        if self.id != data.get('id'):
+            raise RuntimeError(
+                'expected id %s, found %s',
+                self.id, data.get('id'))
+
+    def verify_started(self, o):
+        """Verifies that an event object corresponds to the *started* event.
+
+        :param dict o: The event object.
+
+        :raises RuntimeError: if any data is incorrect
+        """
+        self._verify(self.TYPE + 'Started', o.get('event'), o.get('data'))
+
+    def verify_done(self, o):
+        """Verifies that an event object corresponds to the *done* event.
+
+        :param dict o: The event object.
+
+        :raises RuntimeError: if any data is incorrect
+        """
+        self._verify(self.TYPE + 'Done', o.get('event'), o.get('data'))
 
 
 class JasmineSpec(JasmineData):

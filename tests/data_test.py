@@ -34,6 +34,12 @@ class JasmineDataTest(unittest.TestCase):
                 'Suite 0',
                 'This is Suite 0')
 
+    def running(self, item, jasmine):
+        with item.running(jasmine) as i:
+            if i.TYPE == suite.TYPE:
+                for c in i.children:
+                    self.running(c, jasmine)
+
     def test_parse(self):
         """Tests that parsing a dict returns the expected value"""
         self.assertEqual(
@@ -127,3 +133,22 @@ class JasmineDataTest(unittest.TestCase):
                 test_spec,
                 test_suite).children:
             i.load()
+
+    def test_running(self):
+        """Asserts that running works with correct data"""
+        output = res.output()
+        tree = next(output)
+
+        # The top-level suite is not run
+        for i in unittest_jasmine.data.parse(tree).children:
+            self.running(i, output)
+
+    def test_running_invalid(self):
+        """Asserts that running fails with incorrect data"""
+        output = res.output()
+        tree = next(output)
+        next(output)
+
+        with self.assertRaises(RuntimeError):
+            for i in unittest_jasmine.data.parse(tree).children:
+                self.running(i, output)
