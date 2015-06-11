@@ -18,3 +18,4 @@
 from . import _node as node
 from . import _package_manager as package_manager
 from . import _runner as runner
+from . import _data as data
