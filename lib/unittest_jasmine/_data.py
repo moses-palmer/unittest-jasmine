@@ -39,6 +39,9 @@ class JasmineData(object):
             and self.name == other.name \
             and self.description == other.description
 
+    def __str__(self):
+        return '%s %s <%s>' % (self.TYPE, self.name, self.id)
+
     @property
     def id(self):
         """The item ID."""
