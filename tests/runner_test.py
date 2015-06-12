@@ -1,5 +1,4 @@
 import os
-import types
 import unittest
 
 import unittest_jasmine
@@ -25,9 +24,9 @@ class RunnerTest(unittest.TestCase):
         :return: a dictionary containing at most keys from template
         """
         def value(s, t):
-            if isinstance(s, types.ListType):
+            if isinstance(s, list):
                 return [self.subdict(v1, v2) for v1, v2 in zip(s, t)]
-            elif isinstance(s, types.DictType):
+            elif isinstance(s, dict):
                 return self.subdict(s, t)
             else:
                 return s
