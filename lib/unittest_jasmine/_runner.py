@@ -66,7 +66,7 @@ def jasmine(project_dir, *files, **options):
 
     for line in p.stdout:
         try:
-            yield json.loads(line.strip())
+            yield json.loads(line.strip().decode('ascii'))
         except ValueError:
             log.exception('Invalid output from runner.js: %s', line.strip())
             continue
