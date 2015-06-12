@@ -54,7 +54,7 @@ def _locate_node():
         try:
             node_output = subprocess.check_output([
                 node, '--eval', 'console.log("%s")' % __name__])
-            if node_output.strip() == __name__:
+            if node_output.strip().decode('ascii') == __name__:
                 return node
         except OSError:
             pass

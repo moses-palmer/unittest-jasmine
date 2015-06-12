@@ -70,7 +70,7 @@ class NPM(object):
         try:
             output = subprocess.check_output(
                 [self.COMMAND, '--version'],
-                stderr=subprocess.STDOUT).strip()
+                stderr=subprocess.STDOUT).strip().decode('ascii')
         except:
             self.log.exception('Failed to get npm version')
             raise

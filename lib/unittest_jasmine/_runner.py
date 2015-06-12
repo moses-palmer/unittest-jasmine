@@ -64,12 +64,18 @@ def jasmine(project_dir, *files, **options):
         stdout=subprocess.PIPE,
         stdin=subprocess.PIPE)
 
-    for line in p.stdout:
-        try:
-            yield json.loads(line.strip())
-        except ValueError:
-            log.exception('Invalid output from runner.js: %s', line.strip())
-            continue
+    try:
+        for line in p.stdout:
+            try:
+                yield json.loads(line.strip().decode('ascii'))
+            except ValueError:
+                log.exception(
+                    'Invalid output from runner.js: %s',
+                    line.strip())
+                continue
+    finally:
+        p.stdin.close()
+        p.stdout.close()
 
 
 def _get_runner_from_filesystem():

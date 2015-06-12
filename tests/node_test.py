@@ -16,4 +16,4 @@ class NodeTest(unittest.TestCase):
             stdout=subprocess.PIPE).communicate()
         self.assertEqual(
             'Hello World',
-            stdout.strip())
+            stdout.strip().decode('ascii'))
