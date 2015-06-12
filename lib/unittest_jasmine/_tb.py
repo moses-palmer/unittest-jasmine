@@ -18,6 +18,7 @@
 This module contains classes for mocking tracebacks.
 """
 
+import linecache
 import itertools
 import re
 
@@ -26,6 +27,7 @@ class Code(object):
     """A mock code object used in tracebacks.
     """
     def __init__(self, co_filename, co_name):
+        linecache.updatecache(co_filename, None)
         self.co_filename = co_filename
         self.co_name = co_name
 
