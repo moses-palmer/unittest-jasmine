@@ -81,6 +81,7 @@ setuptools.setup(
     package_dir={'': 'lib'},
     zip_safe=True,
 
+    test_loader='unittest_jasmine:SetuptoolsLoader',
     test_suite='tests',
 
     license='GPLv3',

@@ -21,3 +21,5 @@ from . import _runner as runner
 from . import _data as data
 from . import _tb as tb
 from . import _unittest as unittest
+
+from ._setuptools import SetuptoolsLoader
