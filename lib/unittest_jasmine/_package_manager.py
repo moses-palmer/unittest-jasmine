@@ -112,8 +112,6 @@ def install_dependencies():
     called.
 
     :return: the package manager that serviced the request
-
-    :raises NotImplementedError: if no package manager handled the installation
     """
     for package_manager_class in PACKAGE_MANAGERS:
         try:
@@ -124,5 +122,3 @@ def install_dependencies():
             log.exception(
                 'Package manager %s failed',
                 package_manager_class.__name__)
-
-    raise NotImplementedError()
