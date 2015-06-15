@@ -68,9 +68,9 @@ SUITE_DEFINITION = {
             'description': 'This is spec 2'}]}
 
 
-def output(**options):
+def output(path='test-runner.js', **options):
     """A generator that yields the relevant output from the test run"""
     return unittest_jasmine.runner.jasmine(
         os.path.dirname(__file__),
-        os.path.join('res', 'test-runner.js'),
+        os.path.join('res', path),
         **options)

@@ -29,6 +29,10 @@ import os
 import subprocess
 
 
+log = logging.getLogger(
+        '.'.join((__name__, 'npm')))
+
+
 PACKAGE_MANAGERS = []
 
 
@@ -108,8 +112,6 @@ def install_dependencies():
     called.
 
     :return: the package manager that serviced the request
-
-    :raises NotImplementedError: if no package manager handled the installation
     """
     for package_manager_class in PACKAGE_MANAGERS:
         try:
@@ -117,6 +119,6 @@ def install_dependencies():
             package_manager.install_dependencies()
             return package_manager
         except:
-            pass
-
-    raise NotImplementedError()
+            log.exception(
+                'Package manager %s failed',
+                package_manager_class.__name__)

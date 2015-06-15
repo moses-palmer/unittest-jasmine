@@ -41,17 +41,6 @@ class Interceptor(object):
 
 
 class PackageManagerTest(unittest.TestCase):
-    def test_no_manager(self):
-        """Tests that NotImplementedError is raised when no manager handles
-        request"""
-        backup = unittest_jasmine.package_manager.PACKAGE_MANAGERS
-        unittest_jasmine.package_manager.PACKAGE_MANAGERS = []
-        try:
-            with self.assertRaises(NotImplementedError):
-                unittest_jasmine.package_manager.install_dependencies()
-        finally:
-            unittest_jasmine.package_manager.PACKAGE_MANAGERS = backup
-
     def test_install_dependencies(self):
         """Tests that a manager is called"""
         with Interceptor.active():

@@ -54,6 +54,7 @@ class RunnerTest(unittest.TestCase):
         """Tests that the runner provides the expected output for a Coffee
         Script test suite"""
         output = list(res.output(
+            path='test-runner.coffee',
             helpers=[os.path.join('res', 'coffee-script-activate.js')]))
         expected_output = list(res.TEST_OUTPUT)
 
