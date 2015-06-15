@@ -152,3 +152,27 @@ class JasmineDataTest(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             for i in unittest_jasmine.data.parse(tree).children:
                 self.running(i, output)
+
+    def test_result(self):
+        """Asserts that the result property is set after running"""
+        output = res.output()
+        tree = unittest_jasmine.data.parse(next(output))
+
+        def recurse(callback, format, t = tree):
+            if t != tree:
+                self.assertTrue(
+                    callback(t),
+                    format % str(t))
+            for c in getattr(t, 'children', []):
+                recurse(callback, format, c)
+
+        recurse(
+            lambda i: not i.result,
+            'result was set before running for %s')
+
+        for i in tree.children:
+            self.running(i, output)
+
+        recurse(
+            lambda i: bool(i.result),
+            'result was not set after running for %s')
