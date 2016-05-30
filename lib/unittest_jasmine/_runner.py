@@ -70,7 +70,8 @@ def jasmine(project_dir, *files, **options):
                 yield json.loads(line.strip().decode('ascii'))
             except ValueError:
                 log.exception(
-                    'Invalid output from runner.js: %s',
+                    'Invalid output from %s: %s',
+                    RUNNER_NAME,
                     line.strip())
                 continue
     finally:
@@ -84,7 +85,8 @@ def _get_runner_from_filesystem():
 
 
 def _get_runner_from_pkgresources():
-    return pkg_resources.resource_stream(__package__, RUNNER_NAME).read()
+    return pkg_resources.resource_stream(
+        __name__.rsplit('.', 1)[0], RUNNER_NAME).read()
 
 
 def _get_runner():
