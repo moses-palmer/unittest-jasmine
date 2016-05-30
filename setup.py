@@ -79,6 +79,9 @@ setuptools.setup(
             os.path.dirname(__file__),
             'lib')),
     package_dir={'': 'lib'},
+    package_data={
+        'unittest_jasmine': [
+            'runner.js']},
     zip_safe=True,
 
     test_loader='unittest_jasmine:SetuptoolsLoader',
