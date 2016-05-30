@@ -27,9 +27,9 @@ def git(*args):
         raise RuntimeError(
             'Failed to call git %s (%d): %s',
             ' '.join(args),
-            g.returncode, stderr)
+            g.returncode, stderr.decode('utf-8'))
     else:
-        return stdout
+        return stdout.decode('utf-8')
 
 
 def get_version():
@@ -175,8 +175,7 @@ def tag_release(version):
     """
     Tags the current commit as a release.
 
-    @param version
-        The version that is being released.
+    :param tuple version: The version that is being released.
     """
     git('tag',
         '-a',
@@ -185,8 +184,7 @@ def tag_release(version):
 
 
 def push_to_origin():
-    """
-    Pushes master to origin.
+    """Pushes master to origin.
     """
     print('Pushing to origin...')
 
@@ -205,6 +203,7 @@ def upload_to_pypi():
             os.path.join(os.path.dirname(__file__), os.pardir, 'setup.py'),
             'sdist',
             'bdist_egg',
+            'bdist_wheel',
             'upload'],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
