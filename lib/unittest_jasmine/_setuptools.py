@@ -195,11 +195,8 @@ class SetuptoolsLoader(setuptools.command.test.ScanningLoader):
             setattr(
                 test_item,
                 target,
-                types.MethodType(
-                    getattr(
-                        lifecycle, source, globals()[source]),
-                    test_item,
-                    test_item.__class__))
+                getattr(
+                    lifecycle, source, globals()[source]).__get__(test_item))
         if isinstance(test_item, unittest.Suite):
             add('setUp', 'suite_setup')
             add('tearDown', 'suite_teardown')
@@ -258,10 +255,10 @@ class SetuptoolsLoader(setuptools.command.test.ScanningLoader):
 
             # Make sure that dependencies are installed when the top suite is
             # run
-            top_suite.setUp = types.MethodType(
-                lambda self: package_manager.install_dependencies(),
-                top_suite,
-                top_suite.__class__)
+            def install_dependencies(self):
+                package_manager.install_dependencies()
+
+            top_suite.setUp = install_dependencies.__get__(top_suite)
 
             # Finally add the test suite
             tests.addTest(top_suite)
