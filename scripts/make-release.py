@@ -175,8 +175,7 @@ def tag_release(version):
     """
     Tags the current commit as a release.
 
-    @param version
-        The version that is being released.
+    :param tuple version: The version that is being released.
     """
     git('tag',
         '-a',
@@ -185,8 +184,7 @@ def tag_release(version):
 
 
 def push_to_origin():
-    """
-    Pushes master to origin.
+    """Pushes master to origin.
     """
     print('Pushing to origin...')
 
