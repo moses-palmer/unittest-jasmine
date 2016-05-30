@@ -27,9 +27,9 @@ def git(*args):
         raise RuntimeError(
             'Failed to call git %s (%d): %s',
             ' '.join(args),
-            g.returncode, stderr)
+            g.returncode, stderr.decode('utf-8'))
     else:
-        return stdout
+        return stdout.decode('utf-8')
 
 
 def get_version():
